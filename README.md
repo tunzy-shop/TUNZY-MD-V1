@@ -1,63 +1,39 @@
-# 𝗧𝗨𝗡𝗭𝗬-𝗠𝗗-𝗩1
+# TUNZY-MD-V1 WhatsApp Bot
 
 <p align="center">
-  <img src="./media/botpic.jpeg" height="300" alt="TUNZY-MD-V1 Logo" />
+  <img src="media/botpic.jpeg" alt="TUNZY MD V1" height="300"/>
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=25&duration=4000&pause=1000&color=00F7FF&center=true&vCenter=true&width=500&lines=ULTIMATE+WHATSAPP+BOT;MULTI-DEVICE+SUPPORT;OWNER+BY+TUNZY+SHOP;FAST++SECURE++RELIABLE" alt="Typing SVG" />
-</p>
-
-<div align="center">
-  <a href="https://github.com/tunzy-shop">
-    <img title="GitHub" src="https://img.shields.io/badge/GitHub-tunzy--shop-blue?style=for-the-badge&logo=github&logoColor=white">
-  </a>
-  <a href="https://whatsapp.com/channel/0029Vb65QAGGOj9nnQynhh04">
-    <img title="Channel" src="https://img.shields.io/badge/WhatsApp+Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white">
-  </a>
-</div>
-
-<p align="center">
-  <img src="https://profile-counter.glitch.me/TUNZY-MD-V1/count.svg" alt="Visitor Count" />
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=25&duration=4000&pause=1000&color=00F7FF&center=true&vCenter=true&width=500&lines=TUNZY+MD+V1+BOT;ULTIMATE+WHATSAPP+MULTI-DEVICE+BOT" alt="Typing SVG"/>
 </p>
 
 ---
 
-## ✨ Features
+## 🛠 Features
 
-- 🤖 WhatsApp Multi-Device Support  
-- 🔁 Anti-Call & Anti-Link System  
-- 🎵 Media Downloader: Images, Videos, Voice Notes  
-- 🧰 Group Moderation Commands  
-- 👮 Admin Tools: `.tagall`, `.hidetag`, `.accept all`  
-- 🖼️ Menu with Owner-only Image (`botpic.jpeg`)  
-- 📡 Public / Private Mode  
-- 🏓 Ping Command  
-- 🔄 Auto-Restart  
-- 🔑 Pairing-Code Login  
-- and others 🎉🎉
-
----
-
-## 🛰️ Deployment Options
-
-<div align="center">
-  <a href="https://katab.in/new">
-    <img src="https://img.shields.io/badge/Deploy-Katabumb-blue?style=for-the-badge&logo=matrix&logoColor=white" />
-  </a>
-  
-</div>
+- 🤖 WhatsApp Multi-Device Support (Pairing code)
+- 📸 Media commands: `.hd`, `.vv`, `.vv2`
+- 🎵 Music play command: `.play <song>`
+- 👮 Admin Tools: `.add`, `.kick`, `.tagall`, `.hidetag`, `.accept all`, `.anticall`
+- ⚡ Anti-link system: `.antilink set delete | set kick | set warn 3 | off`
+- 🔒 Public / Private mode: `.public` / `.private`
+- 📝 Menu with bot picture: `.menu`
+- 📞 Owner contact: `.owner`
+- 💻 GitHub repo info: `.repo`
+- 🎯 Bulletin-style menu grouped by command types
 
 ---
 
-### ✅ Katabumb (One-click)
+## 📌 Owner Info
 
-1. Log in to your Katabumb account  
-2. Create new bot and upload all files from the `TUNZY-MD-V1` folder  
-3. Set start command:  
+- **Owner:** Tunzy Shop  
+- **WhatsApp:** +2349067345425  
+- **Channel:** [TUNZY Channel](https://whatsapp.com/channel/0029Vb65QAGGOj9nnQynhh04)  
+- **GitHub:** [tunzy-shop/TUNZY-MD-V1](https://github.com/tunzy-shop/TUNZY-MD-V1)
 
-```bash
-node bot.js
+---
 
-```
+## 🛰️ Deployment (Katabumb)
 
+### Step 1:
