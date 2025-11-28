@@ -59,3 +59,14 @@
 
 ```bash
 node bot.js
+
+
+🔧 Termux Deployment <a name="termux-instructions"></a>
+
+Click the button above or follow the steps below:
+
+pkg update && pkg upgrade -y
+pkg install nodejs git -y
+git clone https://github.com/tunzy-shop/TUNZY-MD-V1.git
+cd TUNZY-MD-V1
+npm install
