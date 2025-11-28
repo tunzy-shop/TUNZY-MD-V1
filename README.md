@@ -33,6 +33,9 @@
 - **GitHub:** [tunzy-shop/TUNZY-MD-V1](https://github.com/tunzy-shop/TUNZY-MD-V1)
 
 ---
+### 🚀 Deploy on Katabumb
+
+[![Deploy on Katabumb](https://img.shields.io/badge/Deploy-Katabumb-blue?style=for-the-badge&logo=appveyor)](https://katab.in)
 
 ## 🛰️ Deployment (Katabumb)
 
