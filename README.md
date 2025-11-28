@@ -35,6 +35,7 @@
 - 🏓 Ping Command  
 - 🔄 Auto-Restart  
 - 🔑 Pairing-Code Login  
+- and others 🎉🎉
 
 ---
 
@@ -44,9 +45,7 @@
   <a href="https://katab.in/new">
     <img src="https://img.shields.io/badge/Deploy-Katabumb-blue?style=for-the-badge&logo=matrix&logoColor=white" />
   </a>
-  <a href="#termux-manual-deployment">
-    <img src="https://img.shields.io/badge/Deploy-Termux-green?style=for-the-badge&logo=android&logoColor=white" />
-  </a>
+  
 </div>
 
 ---
