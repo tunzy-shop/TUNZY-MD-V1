@@ -5,7 +5,12 @@
  * WhatsApp: +2349067345425
  */
 
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
+const { 
+    default: makeWASocket, 
+    useMultiFileAuthState, 
+    DisconnectReason, 
+    fetchLatestBaileysVersion 
+} = require('@whiskeysockets/baileys');
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
