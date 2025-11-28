@@ -71,6 +71,7 @@ pkg install nodejs git -y
 git clone https://github.com/tunzy-shop/TUNZY-MD-V1.git
 cd TUNZY-MD-V1
 npm install
+npm start
 
 ```
 just copy and paste the code up in ur termux
