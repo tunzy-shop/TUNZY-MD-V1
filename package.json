@@ -1,1 +1,15 @@
-
+{
+  "name": "TUNZY-MD-V1",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "latest",
+    "pino": "latest",
+    "fs-extra": "latest",
+    "readline-sync": "latest"
+  }
+}
