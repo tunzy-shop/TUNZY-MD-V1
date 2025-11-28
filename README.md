@@ -33,10 +33,16 @@
 - **GitHub:** [tunzy-shop/TUNZY-MD-V1](https://github.com/tunzy-shop/TUNZY-MD-V1)
 
 ---
-### 🚀 Deploy on Katabumb
 
-[![Deploy on Katabumb](https://img.shields.io/badge/Deploy-Katabumb-blue?style=for-the-badge&logo=appveyor)](https://katab.in)
+## 🚀 Quick Links
+
+[![Deploy on Katabumb](https://img.shields.io/badge/Deploy-Katabumb-blue?style=for-the-badge&logo=appveyor)](https://katab.in)  
+[![Channel](https://img.shields.io/badge/Channel-WhatsApp-green?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029Vb65QAGGOj9nnQynhh04)  
+[![Contact](https://img.shields.io/badge/Contact-Tunzy%20Shop-blue?style=for-the-badge&logo=whatsapp)](https://wa.me/2349067345425)
+
+---
 
 ## 🛰️ Deployment (Katabumb)
 
-### Step 1:
+### Step 1: Prepare your folder
+Ensure your folder structure looks like this:
