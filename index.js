@@ -1,78 +1,156 @@
-// TUNZY-MD-V1 index.js
-const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
-const { state, saveState } = useSingleFileAuthState('./tmp/session.json');
-const readline = require('readline');
-const chalk = require('chalk');
-const fs = require('fs');
-const { ownerNumber, botName, channelLink, groupLink, prefix } = require('./config');
-const { handleCommands } = require('./lib/functions');
+const { default: makeWASocket, useSingleFileAuthState, fetchLatestBaileysVersion, makeInMemoryStore, generatePairingCode, DisconnectReason, jidNormalizedUser } = require('@adiwajshing/baileys')
+const fs = require('fs')
+const chalk = require('chalk')
+const path = require('path')
+const config = require('./config')
+const { getMenu } = require('./lib/functions')
+const store = makeInMemoryStore({})
 
-async function startBot() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+const TMP_DIR = './tmp'
+if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR)
+const SESSION_FILE = path.join(TMP_DIR, 'session.json')
+const { state, saveState } = useSingleFileAuthState(SESSION_FILE)
 
-    rl.question('Enter your WhatsApp number (with country code, e.g +234...): ', async (number) => {
-        console.log(chalk.green('Generating pairing code...'));
+async function start() {
+    const { version } = await fetchLatestBaileysVersion()
 
-        const { version } = await fetchLatestBaileysVersion();
-        const sock = makeWASocket({
-            auth: state,
-            printQRInTerminal: true,
-            version
-        });
+    const client = makeWASocket({
+        version,
+        auth: state,
+        printQRInTerminal: false // No QR code
+    })
 
-        sock.ev.on('connection.update', (update) => {
-            const { connection, lastDisconnect, qr } = update;
+    store.bind(client.ev)
 
-            if (connection === 'open') {
-                console.log(chalk.green(`${botName} connected successfully!`));
-                console.log(chalk.yellow(`
-Wassup ${number} 👋
+    // Generate pairing code if no session
+    if (!fs.existsSync(SESSION_FILE) || fs.statSync(SESSION_FILE).size === 0) {
+        const pairing = generatePairingCode()
+        console.log(chalk.yellowBright(`\n📌 Pairing code generated:\n${pairing}\n`))
+        console.log(chalk.green(`➡ Go to WhatsApp Settings → Linked Devices → Link a Device → Enter this code`))
+    }
 
-♣ PUBLIC COMMANDS
-.ping, .menu, .play <song>, .repo, .owner, .tiktok <link>, .save
+    client.ev.on('connection.update', (update) => {
+        const { connection, lastDisconnect } = update
+        if (connection === 'close') {
+            const reason = lastDisconnect?.error?.output?.statusCode
+            console.log(chalk.red(`Connection closed, restarting... Reason: ${reason}`))
+            start()
+        } else if (connection === 'open') {
+            console.log(chalk.green('✅ Bot connected successfully!'))
+        }
+    })
 
-♣ ADMIN COMMANDS
-.add, .kick, .tag, .tagall, .hidetag, .accept all, .antilink, .open, .close, .promote, .demote
+    client.ev.on('messages.upsert', async (m) => {
+        const msg = m.messages[0]
+        if (!msg.message || msg.key.fromMe) return
 
-♣ OWNER COMMANDS
-.ban, .unban, .block, .anticall, .mode
+        const from = msg.key.remoteJid
+        const sender = jidNormalizedUser(msg.key.participant || msg.key.remoteJid)
+        const text = msg.message.conversation || msg.message.extendedTextMessage?.text || ''
+        const senderName = msg.pushName || 'Friend'
 
-♣ GROUP COMMANDS
-.gc link, .list admin, .list online
+        // === PUBLIC COMMANDS ===
+        if (text.startsWith('.menu')) {
+            await client.sendMessage(from, { text: getMenu(senderName, config) })
+        }
+        if (text.startsWith('.ping')) {
+            await client.sendMessage(from, { text: '🏓 Pong!' })
+        }
+        if (text.startsWith('.play')) {
+            const query = text.replace('.play ', '')
+            await client.sendMessage(from, { text: `🔊 Playing: ${query}` })
+        }
+        if (text.startsWith('.tiktok')) {
+            const link = text.replace('.tiktok ', '')
+            await client.sendMessage(from, { text: `⬇ Downloading TikTok: ${link}` })
+        }
+        if (text.startsWith('.save')) {
+            await client.sendMessage(from, { text: `💾 Saved your request.` })
+        }
+        if (text.startsWith('.repo')) {
+            await client.sendMessage(from, { text: `📂 Repo: ${config.repoLink}` })
+        }
+        if (text.startsWith('.owner')) {
+            await client.sendMessage(from, { text: `Owner: ${config.ownerName} (${config.ownerNumber})` })
+        }
 
-Owner: ${botName} (${ownerNumber})
-Channel: ${channelLink}
-Group: ${groupLink}
-                `));
-                rl.close();
-            } else if (connection === 'close') {
-                const reason = lastDisconnect?.error?.output?.statusCode;
-                if (reason !== DisconnectReason.loggedOut) {
-                    console.log(chalk.red('Bot disconnected, restarting...'));
-                    startBot();
-                } else {
-                    console.log(chalk.red('Logged out, please delete session.json and try again.'));
-                }
-            } else if (qr) {
-                console.log(chalk.blue('Paste this pairing code in WhatsApp → Settings → Linked Devices → Link a Device:'));
-                console.log(chalk.green(qr));
-            }
-        });
-
-        sock.ev.on('creds.update', saveState);
-
-        // Listen for messages
-        sock.ev.on('messages.upsert', async (msg) => {
+        // === GROUP COMMANDS ===
+        if (text.startsWith('.gc link')) {
             try {
-                await handleCommands(sock, msg, number);
-            } catch (e) {
-                console.error(e);
+                const metadata = await client.groupMetadata(from)
+                await client.sendMessage(from, { text: `🔗 Group link: ${metadata.inviteCode || 'No link found'}` })
+            } catch { return }
+        }
+        if (text.startsWith('.list admin')) {
+            try {
+                const metadata = await client.groupMetadata(from)
+                const admins = metadata.participants.filter(p => p.admin).map(a => a.id)
+                await client.sendMessage(from, { text: `👑 Admins:\n${admins.join('\n')}` })
+            } catch { return }
+        }
+        if (text.startsWith('.list online')) {
+            await client.sendMessage(from, { text: '🟢 Online list not implemented' })
+        }
+
+        // === ADMIN COMMANDS ===
+        if (text.startsWith('.add')) {
+            const number = text.replace('.add ', '').replace(/\D/g, '') + '@s.whatsapp.net'
+            await client.groupParticipantsUpdate(from, [number], 'add')
+        }
+        if (text.startsWith('.kick')) {
+            const number = text.replace('.kick ', '').replace(/\D/g, '') + '@s.whatsapp.net'
+            await client.groupParticipantsUpdate(from, [number], 'remove')
+        }
+        if (text.startsWith('.promote')) {
+            const number = text.replace('.promote ', '').replace(/\D/g, '') + '@s.whatsapp.net'
+            await client.groupParticipantsUpdate(from, [number], 'promote')
+        }
+        if (text.startsWith('.demote')) {
+            const number = text.replace('.demote ', '').replace(/\D/g, '') + '@s.whatsapp.net'
+            await client.groupParticipantsUpdate(from, [number], 'demote')
+        }
+        if (text.startsWith('.tag')) {
+            await client.sendMessage(from, { text: `@${sender.split('@')[0]}`, mentions: [sender] })
+        }
+        if (text.startsWith('.tagall')) {
+            try {
+                const metadata = await client.groupMetadata(from)
+                const members = metadata.participants.map(p => p.id)
+                const mentions = members
+                await client.sendMessage(from, { text: `👥 Attention everyone!`, mentions })
+            } catch { }
+        }
+        if (text.startsWith('.hidetag')) {
+            try {
+                const metadata = await client.groupMetadata(from)
+                const members = metadata.participants.map(p => p.id)
+                await client.sendMessage(from, { text: '🤫 Hidden tag', mentions: members })
+            } catch { }
+        }
+        if (text.startsWith('.accept all')) {
+            await client.sendMessage(from, { text: '✅ All requests accepted (placeholder)' })
+        }
+        if (text.match(/https?:\/\/chat.whatsapp.com\/\S+/gi)) {
+            const isAntilinkOn = true
+            if (isAntilinkOn) {
+                await client.sendMessage(from, { text: '⚠️ Group link detected! You will be removed.' })
+                await client.groupParticipantsUpdate(from, [sender], 'remove')
             }
-        });
-    });
+        }
+        if (text.startsWith('.open')) await client.groupSettingUpdate(from, 'not_announcement')
+        if (text.startsWith('.close')) await client.groupSettingUpdate(from, 'announcement')
+
+        // === OWNER COMMANDS ===
+        if (sender === config.ownerNumber.replace(/\D/g, '')) {
+            if (text.startsWith('.ban')) {}
+            if (text.startsWith('.unban')) {}
+            if (text.startsWith('.block')) {}
+            if (text.startsWith('.anticall')) {}
+            if (text.startsWith('.mode')) {}
+        }
+    })
+
+    client.ev.on('creds.update', saveState)
 }
 
-startBot();
+start()
