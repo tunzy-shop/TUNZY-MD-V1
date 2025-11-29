@@ -1,14 +1,18 @@
 {
-  "name": "tunzy-md",
+  "name": "TUNZY-MD-V1",
   "version": "1.0.0",
+  "description": "TUNZY MD BOT - WhatsApp bot with pairing code only for Katabumb",
   "main": "index.js",
-  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "TUNZY",
+  "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "latest",
-    "axios": "latest",
-    "fs-extra": "latest",
-    "chalk": "latest",
-    "yt-search": "latest",
-    "ytdl-core": "latest"
+    "@adiwajshing/baileys": "^5.0.1",
+    "chalk": "^5.3.0",
+    "pino": "^8.12.0",
+    "fs-extra": "^11.1.1",
+    "axios": "^1.6.0"
   }
 }
