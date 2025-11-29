@@ -1,19 +1,27 @@
 {
-  "name": "TUNZY-MD-V1",
+  "name": "tunzy-md-bot",
   "version": "1.0.0",
-  "description": "TUNZY MD V1 WhatsApp bot (pairing code auth)",
+  "description": "Tunzy MD WhatsApp Bot",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node start.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.4.1",
-    "pino": "^8.16.0",
-    "chalk": "^5.3.0",
-    "node-cache": "^5.1.2",
-    "axios": "^1.5.0",
-    "lodash": "^4.17.21",
-    "awesome-phonenumber": "^2.25.0",
-    "file-type": "^18.0.0"
+    "@adiwajshing/baileys": "latest",
+    "axios": "latest",
+    "form-data": "latest",
+    "yt-search": "latest",
+    "ytdl-core": "latest",
+    "node-fetch": "3.3.2",
+    "fluent-ffmpeg": "latest",
+    "ffmpeg-static": "latest",
+    "tiktok-scraper": "latest",
+    "moment": "latest",
+    "pino": "latest",
+    "chalk": "latest",
+    "fs-extra": "latest",
+    "path": "latest",
+    "dotenv": "latest"
   }
 }
