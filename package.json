@@ -1,19 +1,13 @@
 {
   "name": "TUNZY-MD-V1",
   "version": "1.0.0",
-  "description": "TUNZY MD V1 WhatsApp Bot - Katabumb Ready",
+  "description": "WhatsApp Bot TUNZY-MD-V1 with pairing code",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Tunzy Shop",
-  "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "^4.9.1",
-    "node-fetch": "^3.3.2",
-    "qrcode-terminal": "^0.12.0"
-  },
-  "engines": {
-    "node": ">=24.0.0"
+    "@adiwajshing/baileys": "^5.0.2",
+    "chalk": "^5.3.0"
   }
 }
