@@ -1,27 +1,14 @@
 {
-  "name": "tunzy-md-bot",
+  "name": "tunzy-md",
   "version": "1.0.0",
-  "description": "Tunzy MD WhatsApp Bot",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
-    "@adiwajshing/baileys": "latest",
+    "@whiskeysockets/baileys": "latest",
     "axios": "latest",
-    "form-data": "latest",
-    "yt-search": "latest",
-    "ytdl-core": "latest",
-    "node-fetch": "3.3.2",
-    "fluent-ffmpeg": "latest",
-    "ffmpeg-static": "latest",
-    "tiktok-scraper": "latest",
-    "moment": "latest",
-    "pino": "latest",
-    "chalk": "latest",
     "fs-extra": "latest",
-    "path": "latest",
-    "dotenv": "latest"
+    "chalk": "latest",
+    "yt-search": "latest",
+    "ytdl-core": "latest"
   }
 }
