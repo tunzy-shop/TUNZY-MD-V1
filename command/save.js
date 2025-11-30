@@ -1,22 +1,24 @@
-const fs = require("fs");
 module.exports = {
-  name: "save",
-  run: async (sock, msg) => {
-    // This command tells user how to use save: reply to media with ".save"
-    if (!msg.quoted) {
-      return sock.sendMessage(msg.chat, { text: "Reply to a media (image/video/voice) with .save to save it." });
-    }
+    name: "save",
+    cmd: ['save'],
+    run: async (sock, msg) => {
+        const jid = msg.key.remoteJid;
 
-    try {
-      const media = await msg.quoted.download();
-      const mime = msg.quoted.mimetype || "application/octet-stream";
-      const ext = mime.split("/").pop().split(";")[0];
-      const filePath = `./media/saved_${Date.now()}.${ext}`;
-      fs.writeFileSync(filePath, media);
-      await sock.sendMessage(msg.chat, { text: `Saved to ${filePath} (server-side)` });
-    } catch (e) {
-      console.error(e);
-      await sock.sendMessage(msg.chat, { text: "Failed to save media." });
+        try {
+            const quoted = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+            if (!quoted) return sock.sendMessage(jid, { text: "Reply to a status to save it." });
+
+            const media = await sock.downloadMediaMessage({ message: quoted });
+
+            await sock.sendMessage(jid, {
+                document: media,
+                mimetype: "application/octet-stream",
+                fileName: "status_saved"
+            });
+
+        } catch (err) {
+            console.log(err);
+            sock.sendMessage(jid, { text: "Failed to save." });
+        }
     }
-  }
 };
