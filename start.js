@@ -1,21 +1,19 @@
 const { fork } = require("child_process");
 const chalk = require("chalk");
 
-async function start() {
+function start() {
     const child = fork("./index.js");
 
     child.on("message", msg => {
-        console.log("child to parent =>", msg);
+        console.log("child => parent:", msg);
     });
 
-    child.on("close", (code) => {
-        console.log(chalk.black.bgRed("⚠ Bot closed. Restarting..."));
+    child.on("close", () => {
+        console.log(chalk.bgRed.black("Bot crashed. Auto-restarting..."));
         start();
     });
 
-    child.on("exit", (code) => {
-        console.log(chalk.black.bgYellow("⚠ Bot exited. Restarting..."));
-    });
+    child.on("exit", () => {});
 }
 
 start();
