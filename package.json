@@ -1,18 +1,21 @@
 {
   "name": "tunzy-md-v1",
   "version": "1.0.0",
-  "description": "TUNZY-MD WhatsApp Bot with Auto-Join Feature",
+  "description": "TUNZY-MD WhatsApp Bot with Watermark and Auto-Join Features",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "backup": "node utils/backup.js",
+    "clean": "rm -rf tmp/* logs/*",
+    "setup": "npm install && mkdir -p assets tmp data logs"
   },
   "keywords": [
     "whatsapp-bot",
     "tunzy-md",
-    "multi-device",
-    "whatsapp-autojoin"
+    "watermark",
+    "auto-join",
+    "multi-device"
   ],
   "author": "Tunzy Shop",
   "license": "MIT",
@@ -20,7 +23,8 @@
     "@whiskeysockets/baileys": "^6.5.0",
     "axios": "^1.6.0",
     "pino": "^8.15.0",
-    "@hapi/boom": "^10.0.1"
+    "@hapi/boom": "^10.0.1",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
