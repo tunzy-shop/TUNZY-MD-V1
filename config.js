@@ -1,5 +1,4 @@
 const config = {
-    // Bot Information
     name: "TUNZY-MD-V1",
     version: "1.0.0",
     author: "Tunzy",
@@ -7,14 +6,16 @@ const config = {
     ownerNumber: "2349067345425",
     youtube: "Tunzy Shop",
     
-    // Watermark Configuration
+    // Media Watermark Configuration
     watermark: {
         enabled: true,
-        text: "🌹 TUNZY-MD-V1 | Tunzy Shop",
+        text: "TUNZY MD V1",
+        fontSize: 40,
+        fontColor: "#FFFFFF",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
         position: "bottom-right",
-        opacity: 0.7,
-        color: "#FF0000",
-        fontSize: 20
+        padding: 20,
+        opacity: 0.8
     },
     
     // Auto-join Configuration
@@ -28,9 +29,14 @@ const config = {
     prefix: ".",
     mode: "public",
     botpic: "./assets/botpic.jpeg",
-    watermarkImage: "./assets/watermark.png",
     
-    // Session Configuration
+    // Download settings (NO API NEEDED)
+    downloads: {
+        watermarkAllMedia: true,
+        maxSize: 50 // MB
+    },
+    
+    // Session configuration
     session: {
         saveInterval: 60000,
         clearOnStart: false
@@ -44,14 +50,6 @@ const config = {
         antiDelete: false,
         antiCall: false,
         pmBlocker: false
-    },
-    
-    // API Keys (Add your own)
-    apis: {
-        weather: "",
-        news: "",
-        openai: "",
-        gemini: ""
     }
 };
 
